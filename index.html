@@ -110,14 +110,16 @@ button { cursor: pointer; }
 .hero-go { border: 0; border-radius: 999px; padding: 15px 34px; background: var(--theme); color: var(--on-theme, #fff); font-weight: 700; font-size: 17px; box-shadow: 0 10px 26px color-mix(in srgb, var(--theme) 35%, transparent); transition: transform .15s; }
 .hero-go:hover { transform: translateY(-2px); }
 .hero-ph { position: absolute; inset-block: 0; inset-inline-end: 0; width: min(46%, 520px); transition: opacity .26s, transform .26s; }
-.hp { position: absolute; height: 84%; aspect-ratio: 9 / 16; border-radius: 22px; object-fit: cover; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); cursor: pointer; transition: transform .25s; }
-.hp0 { inset-inline-end: 54%; top: 12%; transform: rotate(8deg); opacity: .9; }
-.hp1 { inset-inline-end: 6%; top: 10%; transform: rotate(-6deg); }
-.hp2 { inset-inline-end: 28%; top: 7%; height: 88%; z-index: 2; transform: rotate(2deg); }
-.hp:hover { transform: translateY(-6px) rotate(0); z-index: 3; }
-[dir="rtl"] .hp0 { transform: rotate(-8deg); } [dir="rtl"] .hp1 { transform: rotate(6deg); } [dir="rtl"] .hp2 { transform: rotate(-2deg); }
+.hp { position: absolute; height: 84%; aspect-ratio: 9 / 16; border-radius: 22px; object-fit: cover; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); cursor: pointer; transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, filter .35s; --r: 0deg; transform: rotate(var(--r)); will-change: transform; }
+.hp0 { inset-inline-end: 54%; top: 12%; --r: 8deg; filter: brightness(.9); }
+.hp1 { inset-inline-end: 6%; top: 10%; --r: -6deg; }
+.hp2 { inset-inline-end: 28%; top: 7%; height: 88%; z-index: 2; --r: 2deg; }
+[dir="rtl"] .hp0 { --r: -8deg; } [dir="rtl"] .hp1 { --r: 6deg; } [dir="rtl"] .hp2 { --r: -2deg; }
+.hp:hover { transform: translateY(-10px) rotate(var(--r)) scale(1.03); z-index: 3; filter: none; box-shadow: 0 40px 70px rgba(0, 0, 0, .55); }
 .hero-dots { position: absolute; z-index: 2; bottom: 22px; inset-inline-start: clamp(28px, 5vw, 64px); display: flex; gap: 7px; }
-.hero-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 9px; background: color-mix(in srgb, var(--ink) 25%, transparent); transition: width .25s, background .25s; }
+.hero-dots button { position: relative; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 9px; cursor: pointer; background: color-mix(in srgb, var(--ink) 25%, transparent); transition: width .25s, background .25s; }
+.hero-dots button::before { content: ""; position: absolute; inset: -10px -5px; }
+.hero-dots button:hover { background: color-mix(in srgb, var(--ink) 50%, transparent); }
 .hero-dots button.on { width: 26px; background: var(--theme); }
 .hero.swap .hero-txt, .hero.swap .hero-ph { opacity: 0; transform: translateY(8px); }
 .hero[hidden] { display: none; }
