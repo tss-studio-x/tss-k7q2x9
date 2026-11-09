@@ -123,7 +123,9 @@ button { cursor: pointer; }
 .hero-dots button.on { width: 26px; background: var(--theme); }
 .hero.swap .hero-txt, .hero.swap .hero-ph { opacity: 0; transform: translateY(8px); }
 .group-pair { display: flex; gap: 64px; align-items: flex-start; justify-content: flex-start; }
-.group-pair > .group { flex: 0 1 auto !important; min-width: 0; }
+.group-pair > .group { --cw: clamp(150px, 14vw, 230px); flex: 0 0 calc(var(--n, 2) * var(--cw) + (var(--n, 2) - 1) * 22px) !important; min-width: 0; max-width: 100%; }
+.group-pair .group-title { white-space: nowrap; overflow: hidden; }
+.group-pair .group-row .card { flex-basis: var(--cw); }
 .group-pair .row-wrap { --ext: 0px; }
 .group-pair .cards { -webkit-mask-image: none !important; mask-image: none !important; }
 @media (max-width: 900px) { .group-pair { display: block; } }
