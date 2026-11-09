@@ -122,6 +122,10 @@ button { cursor: pointer; }
 .hero-dots button:hover { background: color-mix(in srgb, var(--ink) 50%, transparent); }
 .hero-dots button.on { width: 26px; background: var(--theme); }
 .hero.swap .hero-txt, .hero.swap .hero-ph { opacity: 0; transform: translateY(8px); }
+.group-pair { display: flex; gap: clamp(28px, 4vw, 64px); align-items: flex-start; }
+.group-pair > .group { flex: 1 1 0; min-width: 0; }
+.group-pair .row-wrap { --ext: 14px; }
+@media (max-width: 900px) { .group-pair { display: block; } }
 .hero[hidden] { display: none; }
 .hero-go { display: none !important; }
 .hero-p { margin-bottom: 0; }
