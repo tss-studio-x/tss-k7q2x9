@@ -152,3 +152,30 @@ document.readyState==="loading"?document.addEventListener("DOMContentLoaded",upd
 const n=document.createElement("div");n.className="sf-note";n.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.5"/></svg><span></span>';
 const put=()=>{let t=document.documentElement.lang==="en"?"For best results, use Chrome or Edge":"للحصول على أفضل أداء استخدم Chrome أو Edge";if(n.lastChild.textContent!==t)n.lastChild.textContent=t;let h=document.querySelector("#home .hero");if(h&&h.previousElementSibling!==n)h.before(n)};
 new MutationObserver(put).observe(document.documentElement,{attributes:!0,attributeFilter:["lang"],childList:!0,subtree:!0});put()})();
+
+globalThis.__boot=(async()=>{const B=document.getElementById("boot");if(!B)return;const en=()=>document.documentElement.lang==="en";
+const T=B.querySelector(".boot-t"),Ss=B.querySelector(".boot-s"),P=B.querySelector(".boot-p"),I=B.querySelector(".boot-bar i");
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const hide=()=>{B.classList.add("out");document.documentElement.classList.remove("booting");setTimeout(()=>B.remove(),600)};
+const sleep=t=>new Promise(r=>setTimeout(r,t));
+const homeReady=()=>Promise.race([sleep(10000),(async()=>{try{await Promise.race([document.fonts.ready,sleep(1500)])}catch(e){}
+for(let i=0;i<40&&!document.querySelector("#groups .card img");i++)await sleep(100);
+for(let i=0;i<60;i++){if(![...document.querySelectorAll("#home img")].some(im=>{if(im.complete)return!1;let r=im.getBoundingClientRect();return r.width&&r.bottom>0&&r.top<innerHeight}))break;await sleep(100)}await sleep(150)})()]);
+let man=null;try{man=await (await fetch("preload.json",{cache:"no-cache"})).json()}catch(e){}
+if(man&&"serviceWorker" in navigator)try{await navigator.serviceWorker.register("sw.js?v="+man.v)}catch(e){}
+if(!man||ls.get("tss-pre")===man.v){await homeReady();hide();return}
+const upd=!!ls.get("tss-pre");const col=+(ls.get("tss:color")||3)||3;
+const files=man.files.filter(f=>!f.c||f.c===col);const total=files.reduce((a,f)=>a+f.s,0);let got=0;
+const txt=()=>{T.textContent=en()?(upd?"Updating templates…":"Preparing all templates…"):(upd?"جاري تحديث القوالب…":"جاري تجهيز كل القوالب…");Ss.textContent=en()?(upd?"Downloading only what changed.":"This only happens the first time. After this, everything opens instantly."):(upd?"يتم تحميل التعديلات الجديدة فقط.":"يحدث هذا في أول مرة فقط، بعدها كل شيء يفتح فورًا.")};
+const prog=()=>{let p=total?Math.min(100,Math.round(got/total*100)):100;I.style.width=p+"%";P.textContent=p+"% · "+(got/1048576).toFixed(0)+" / "+(total/1048576).toFixed(0)+" MB"};
+B.classList.add("dl");txt();prog();
+let cache=null,old=null,oldMap={};try{cache=await caches.open("tss-"+man.v)}catch(e){}
+if(cache&&upd){try{old=await caches.open("tss-"+ls.get("tss-pre"));oldMap=JSON.parse(ls.get("tss-pre-map")||"{}")}catch(e){old=null}}
+const abs=u=>new URL(u,location.href).href.split("#")[0];
+const one=async f=>{const k=abs(f.u);try{if(cache){let h=await cache.match(k);if(h){got+=f.s;return}if(old&&oldMap[f.u]===f.h){h=await old.match(k);if(h){await cache.put(k,h);got+=f.s;return}}}
+const r=await fetch(f.u);if(!r.ok||!r.body){got+=f.s;return}const rd=r.body.getReader(),ch=[];let n=0;for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);n+=value.length;got+=value.length;if(n>f.s)got-=value.length}
+if(n<f.s)got+=f.s-n;if(cache)await cache.put(k,new Response(new Blob(ch,{type:r.headers.get("content-type")||""}),{headers:r.headers}))}catch(e){}};
+let q=files.slice(),tk=setInterval(prog,200);await Promise.all(Array.from({length:6},async()=>{while(q.length)await one(q.shift())}));clearInterval(tk);got=total;prog();
+ls.set("tss-pre",man.v);ls.set("tss-pre-map",JSON.stringify(Object.fromEntries(man.files.map(f=>[f.u,f.h]))));
+try{for(const k of await caches.keys())if(k.startsWith("tss-")&&k!=="tss-"+man.v)await caches.delete(k)}catch(e){}
+await homeReady();await sleep(250);hide()})();
