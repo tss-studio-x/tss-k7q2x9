@@ -62,10 +62,10 @@ const slug=()=>decodeURIComponent((location.hash||"").slice(1));const on=()=>{le
 let END=1,EON=!0;try{let v=parseFloat(localStorage.getItem("tss-ec-dur"));if(v>=.1&&v<=10)END=v;EON=localStorage.getItem("tss-ec-on")!=="0"}catch(e){}
 const cur=new WeakMap;
 globalThis.__ecOn=on;
-globalThis.__ecDur=(tpl,C)=>{let Cc=Math.max(1/FPS,Math.floor(C*FPS+1e-6)/FPS);if(!on()){tpl&&cur.delete(tpl);return Cc}tpl&&cur.set(tpl,Cc);return PRE+Cc+(EON&&endOK()?END:0)};
+globalThis.__ecDur=(tpl,C)=>{let F=Math.floor(C*FPS+1e-6);if(!on()){tpl&&cur.delete(tpl);return Math.max(1,F)/FPS}let Cc=Math.max(PRE+1/FPS,(F-1)/FPS);tpl&&cur.set(tpl,Cc);return Cc+(EON&&endOK()?END:0)};
 const CT={segment:2,"segment-v2":2,"segment-3":3,video:2,"video-2":3,qa:2,"qa-3":3.5,"qa-question":2,"qa-character":2,"guess-the-character":2,emoji:2,"guess-the-movie":2,"difference-between-images":6,quiz:3,"quiz-with-photo":3,"screen-shot":3};const coverT=(Cc,tpl)=>{let c=tpl&&tpl.cfg&&tpl.cfg.sequence&&tpl.coverDur;if(c>0)return Math.max(.1,Math.min(c-.4,Cc-.1));let t=CT[slug()];return Math.max(0,Math.min(t==null?3:t,Cc-.1))};
-globalThis.__ecMap=(tpl,t)=>{if(!on()||!cur.has(tpl))return t;let Cc=cur.get(tpl),c=t-PRE;return c<0||c>=Cc-1e-6?coverT(Cc,tpl):c};
-globalThis.__ecAudio=async(e,t,n,orig)=>{if(!on()||!cur.has(e))return orig(e,t,n);let Cc=cur.get(e),b=await orig(e,Cc+(EON&&endOK()?END:0),n);if(!b)return b;let sr=b.sampleRate,L=Math.max(1,Math.ceil(t*sr)),off=Math.round(PRE*sr),o;try{o=new AudioBuffer({length:L,numberOfChannels:b.numberOfChannels,sampleRate:sr})}catch(x){return b}for(let c=0;c<b.numberOfChannels;c++){let d=b.getChannelData(c).subarray(0,Math.max(0,L-off));o.getChannelData(c).set(d,off)}return o};
+globalThis.__ecMap=(tpl,t)=>{if(!on()||!cur.has(tpl))return t;let Cc=cur.get(tpl);return t<PRE-1e-6||t>=Cc-1e-6?coverT(Cc,tpl):t};
+globalThis.__ecAudio=(e,t,n,orig)=>orig(e,t,n);
 const ar=()=>document.documentElement.lang!=="en";
 if(!document.getElementById("ec-css")){let st=document.createElement("style");st.id="ec-css";st.textContent=".ec-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative}.ec-row>label{flex:none;padding:4px 12px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;font-size:13px}.ec-row{--theme:var(--ink)}.ec-row input[type=range]{accent-color:var(--ink)}.ec-row output{font-weight:700;color:var(--ink)}.ec-row .ios-switch{transform:scale(.8);margin:0 -4px}.ec-row.ec-off input[type=range],.ec-row.ec-off output{opacity:.35}.ec-row output{font-variant-numeric:tabular-nums}.finish .ec-row{padding:10px 14px;border-radius:16px;background:var(--surface);box-shadow:var(--shadow-sm)}";document.head.append(st)}
 const row=document.createElement("div");row.className="row ec-row";
