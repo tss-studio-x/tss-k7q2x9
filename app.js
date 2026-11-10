@@ -147,3 +147,8 @@ cb.addEventListener("change",()=>{on=cb.checked;globalThis.__whiteBg=on;try{loca
 const upd=()=>{tx.textContent=ar()?"خلفية بيضاء":"White background";box.hidden=slug()!==SL;let top=document.querySelector(".stage-top");top&&!box.isConnected&&top.append(box)};
 new MutationObserver(upd).observe(document.documentElement,{attributes:!0,attributeFilter:["lang"]});addEventListener("hashchange",upd);
 document.readyState==="loading"?document.addEventListener("DOMContentLoaded",upd):upd()})();
+
+(()=>{const ua=navigator.userAgent;const safari=/safari/i.test(ua)&&!/chrome|chromium|crios|fxios|edg|opr|android/i.test(ua)||/[?&]safari-note/.test(location.search);if(!safari)return;
+const n=document.createElement("div");n.className="sf-note";n.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.5"/></svg><span></span>';
+const put=()=>{let t=document.documentElement.lang==="en"?"For best results, use Chrome or Edge":"للحصول على أفضل أداء استخدم Chrome أو Edge";if(n.lastChild.textContent!==t)n.lastChild.textContent=t;let h=document.querySelector("#home .hero");if(h&&h.previousElementSibling!==n)h.before(n)};
+new MutationObserver(put).observe(document.documentElement,{attributes:!0,attributeFilter:["lang"],childList:!0,subtree:!0});put()})();
