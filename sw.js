@@ -1,6 +1,6 @@
 // Top Snap Studio: serves template files from the browser cache after the first visit.
 const V = new URL(self.location).searchParams.get("v") || "0";
-const CACHE = "tss-" + V;
+const CACHE = "tssp-" + V;
 const LIVE = /(?:^|\/)(?:index\.html|app\.js|sw\.js|preload\.json)?$/;
 
 self.addEventListener("install", () => self.skipWaiting());
