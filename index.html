@@ -402,7 +402,7 @@ body:not([data-view="home"]) .home-colors { display: none; } /* the editor has i
 .scrub:hover #scrub-knob, .scrub.dragging #scrub-knob { transform: scale(1.2); }
 .scrub:focus-visible { outline: none; }
 .scrub:focus-visible #scrub-knob { box-shadow: 0 0 0 2px var(--theme), 0 0 0 5px color-mix(in srgb, var(--theme) 35%, transparent); }
-.time { flex: none; min-width: 3.2em; text-align: center; font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); }
+.time { flex: none; min-width: 3.2em; text-align: center; font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--muted); direction: ltr; unicode-bidi: isolate; white-space: nowrap; }
 
 /* create sheet */
 #sheet { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: rgba(12, 10, 18, .55); backdrop-filter: blur(6px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
