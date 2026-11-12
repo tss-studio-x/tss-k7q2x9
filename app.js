@@ -153,11 +153,11 @@ let mt=0,sig="";const key=()=>{let g=document.getElementById("groups");return do
 globalThis.__cutFg=h=>{if(globalThis.__whiteBg||decodeURIComponent((location.hash||"").slice(1))!=="guess-the-character"||!h)return null;let m=/^#?([0-9a-f]{6})$/i.exec(h);if(!m)return null;let v=parseInt(m[1],16),k=.45,f=x=>Math.round(x+(255-x)*k);return`rgb(${f(v>>16&255)},${f(v>>8&255)},${f(v&255)})`};globalThis.__cutBg=h=>{if(globalThis.__whiteBg||decodeURIComponent((location.hash||"").slice(1))!=="guess-the-character"||!h)return null;let m=/^#?([0-9a-f]{6})$/i.exec(h);if(!m)return null;let v=parseInt(m[1],16),k=.55;return`rgb(${Math.round((v>>16&255)*k)},${Math.round((v>>8&255)*k)},${Math.round((v&255)*k)})`};
 
 (()=>{const SL="guess-the-character";const slug=()=>decodeURIComponent((location.hash||"").slice(1));
-let on=false;try{on=localStorage.getItem("tss-gc-white")==="1"}catch(e){}globalThis.__whiteBg=on;
+let on=true;try{on=localStorage.getItem("tss-gc-white2")!=="0"}catch(e){}globalThis.__whiteBg=on;
 const ar=()=>document.documentElement.lang!=="en";
 const box=document.createElement("label");box.className="ios-row";const cb=document.createElement("input");cb.type="checkbox";cb.className="ios-switch";cb.setAttribute("role","switch");cb.checked=on;const tx=document.createElement("span");box.append(tx,cb);
 const redraw=()=>{let sw=document.querySelector('#swatches .swatch[aria-checked="true"]');sw&&sw.click()};
-cb.addEventListener("change",()=>{on=cb.checked;globalThis.__whiteBg=on;try{localStorage.setItem("tss-gc-white",on?"1":"0")}catch(e){}redraw()});
+cb.addEventListener("change",()=>{on=cb.checked;globalThis.__whiteBg=on;try{localStorage.setItem("tss-gc-white2",on?"1":"0")}catch(e){}redraw()});
 const upd=()=>{tx.textContent=ar()?"خلفية بيضاء":"White background";box.hidden=slug()!==SL;let top=document.querySelector(".stage-top");top&&!box.isConnected&&top.append(box)};
 new MutationObserver(upd).observe(document.documentElement,{attributes:!0,attributeFilter:["lang"]});addEventListener("hashchange",upd);
 document.readyState==="loading"?document.addEventListener("DOMContentLoaded",upd):upd()})();
