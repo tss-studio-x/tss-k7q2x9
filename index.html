@@ -429,7 +429,7 @@ body:not([data-view="home"]) .home-colors { display: none; } /* the editor has i
   <div class="bar-end"><div class="home-colors"><span id="home-colors-label"></span><div id="home-swatches" class="swatches" role="radiogroup"></div></div><button id="lang" class="lang" type="button">English</button></div>
 </header>
 <div id="boot" role="status" aria-live="polite"><div class="boot-card"><img alt=""><div class="boot-t"></div><div class="boot-s"></div><div class="boot-bar"><i></i></div><div class="boot-p"></div></div></div>
-<script>(function(){var b=document.getElementById("boot"),en=false;try{en=localStorage.getItem("tss:lang")==="en"}catch(e){}document.documentElement.classList.add("booting");var m=document.querySelector(".brand-mark");if(m)b.querySelector("img").src=m.src;b.querySelector(".boot-t").textContent=en?"Loading…":"جاري التحميل…";})();</script>
+<script>(function(){var b=document.getElementById("boot"),en=true;try{en=localStorage.getItem("tss:lang")!=="ar"}catch(e){}document.documentElement.classList.add("booting");var m=document.querySelector(".brand-mark");if(m)b.querySelector("img").src=m.src;b.querySelector(".boot-t").textContent=en?"Loading…":"جاري التحميل…";})();</script>
 
 <main id="home">
   <div class="home-head" hidden><p class="badge glass"><span class="dot" aria-hidden="true"></span><span id="home-badge"></span></p><h1 id="home-title"></h1><p id="home-lead"></p></div>
