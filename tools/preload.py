@@ -4,6 +4,7 @@ import json,os,hashlib
 root=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 man=json.load(open(os.path.join(root,'preload.json')))
 out=[];H=hashlib.md5()
+H.update(b'epoch-2')  # bump to force every browser to re-check its saved files
 for e in man['files']:
     p=os.path.join(root,e['u'])
     if not os.path.isfile(p): print('missing',e['u']);continue
